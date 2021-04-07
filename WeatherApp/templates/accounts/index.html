@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} | Index {% endblock %}
+{% block body_block%}
+
+{% if user.is_authenticated%}
+  <div class = "jumbotron">
+    <h3> What is the Weather Like Today?</h3> 
+        <form action="{% url 'weather:location' %}" method="POST">
+          {% csrf_token %}
+        <div class="form-group">
+          <label for="postlcode">Postal Code</label>
+          <input type="text" name="postlcode" class="form-control" required>
+        </div>       
+        <input type="submit" value="SUBMIT" class="btn btn-primary btn-block">
+      </form>
+  </div>
+{% else %}
+  <h3> Plese Login or Register to check Weather Data</h3>
+  {% endif %}
+
+{% endblock%}

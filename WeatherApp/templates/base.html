@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <title>Weather Data {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-static-top">
+            <nav class = 'container'>
+                <ul class="nav navbar-nav">
+                    <li><a class = 'navbar-brand' href = "{% url 'index'%}">Home</a></li>
+                    <li><a class = 'navbar-link' href = "{% url 'admin:index'%}">Admin</a></li>
+                    {% if user.is_authenticated%}
+                    <li><a class = 'navbar-link' href="{% url 'logout'%}">Logout</a></li>   
+                    {% else %}
+                    <li><a class = 'navbar-link' href = "{% url 'accounts:login' %}">LogIn</a></li>
+                    {% endif %}
+                    <li><a class = 'navbar-link' href = "{% url 'accounts:register' %}">Register</a></li>                  
+                </ul>
+                <nav>
+                    <ul class="nav navbar-nav navbar-right ">
+                        {% if user.is_authenticated%}
+                            <h3 >Hello {{ user.username }} </h3>   
+                        {% endif %}            
+                    </ul>
+                </nav>
+            </nav>
+        </nav>
+        <div class="container">
+            {% block body_block%}
+            {% endblock%}
+        </div>
+    </body>
+</html>

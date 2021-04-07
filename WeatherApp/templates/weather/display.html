@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block body_block%}
+
+
+{% if user.is_authenticated%}
+  <div class = "jumbotron">
+    <h3> What is the Weather Like Today?</h3> 
+        <form action="{% url 'weather:location' %}" method="POST">
+          {% csrf_token %}
+        <div class="form-group">
+          <label for="postlcode">Postal Code</label>
+          <input type="text" name="postlcode" class="form-control" required>
+        </div>       
+        <input type="submit" value="SUBMIT" class="btn btn-primary btn-block">
+      </form>
+  </div>
+{% endif %}
+
+{% if search_results %}
+<h1> Here is Weather Data: </h1>
+<table class="table table-bordered">
+    <thead>
+      <tr class="table-active">
+        <th scope="col">Property</th>
+        <th scope="col">Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for property, values in search_results.items %}
+
+      {% if  property != 'id' %}
+        <tr>
+          <td>{{ property }}</td>
+          <td>{{ values }}</td>
+        </tr>
+        {%endif%}
+      {% endfor %}
+    </tbody>
+  </table>
+{%else%}
+<h1>Please check for Valid Postal Code</h1>
+{%endif%}
+{% endblock%}
